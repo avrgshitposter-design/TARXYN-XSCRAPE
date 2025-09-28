@@ -141,28 +141,23 @@ async def main():
         print(Fore.RED + "Нет прокси для проверки. Проверь источники." + Style.RESET_ALL)
         return
 
-    # stats и lock
     stats = {"done": 0, "good": 0, "bad": 0, "total": total}
     lock = asyncio.Lock()
 
     sem = asyncio.Semaphore(THREADS)
     tasks = []
 
-    # создаём задачи
     for ptype, proxy in all_proxies:
         async def sem_task(pt=ptype, pr=proxy):
             async with sem:
                 await check_proxy_socks(pr, pt, lock, stats)
         tasks.append(asyncio.create_task(sem_task()))
 
-    # начальный прогресс
     show_progress(0, total, 0, 0)
 
-    # ждём завершения
     await asyncio.gather(*tasks)
 
-    # финал
-    print()  # newline
+    print() 
     print(Fore.CYAN + "[+] Сканирование завершено." + Style.RESET_ALL)
     print(Fore.GREEN + f"Рабочие: {stats['good']}" + Style.RESET_ALL + " | " +
           Fore.RED + f"Нерабочие: {stats['bad']}" + Style.RESET_ALL)
@@ -173,4 +168,5 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\n" + Fore.YELLOW + "[!] Прервано пользователем." + Style.RESET_ALL)
+
 
