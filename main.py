@@ -11,7 +11,6 @@ import random
 
 init(autoreset=True)
 
-# === ASCII ART ===
 ASCII_ART = Fore.GREEN + r"""
 ________________ ______________  ________.___. ___ ___             ____________________________    _____ __________ 
 \__    ___/  _  \\______   \   \/  /\__  |   |/   |   \           /   _____/\_   ___ \______   \  /  _  \\______   \
@@ -21,9 +20,7 @@ ________________ ______________  ________.___. ___ ___             _____________
                 \/               \_/ \/             \/                   \/         \/       \/         \/          
 """ + Style.RESET_ALL
 
-# === Конфиги ===
-THREADS = 100  # количество одновременных проверок (регулируй)
-# только SOCKS4/5 источники (с GitHub)
+THREADS = 100 
 proxy_sources = {
     "socks4": [
         "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
@@ -176,3 +173,4 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\n" + Fore.YELLOW + "[!] Прервано пользователем." + Style.RESET_ALL)
+
